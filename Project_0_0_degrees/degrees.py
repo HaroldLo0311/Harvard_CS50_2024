@@ -97,17 +97,23 @@ def shortest_path(source, target):
     frontier.add(start)
     explored_set = set()
     path = []
+
     while True:
         if frontier.empty():
-            raise Exception("no solution")
+            return None
         current_node = frontier.remove()
         explored_set.add(current_node.state)
+        if target in neighbors_for_person(source):
+            return 0
+        #if target = source:
+        if target == source:
+            return []
         for action, state in neighbors_for_person(current_node.state):
             #if I find the target in neighbors sets
             if state == target:
-                path.insert(0, [action, state])
+                path = [(action, state), ]
                 while current_node.parent != None:
-                    path.insert(0,[current_node.action, current_node.state])
+                    path.insert(0,(current_node.action, current_node.state))
                     current_node = current_node.parent
                 return path
             elif state not in explored_set and not frontier.contains_state(state):
