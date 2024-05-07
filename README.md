@@ -1,1 +1,1 @@
-# Harvard_CS50_AI_2024
+# Harvard_CS50_2024
