@@ -1,0 +1,2 @@
+Multiply weight for the songs with each characteristics of the songs, with the weight numbers descending ranking ascending, then classify the Aurora colors by the outcomes.
+The better way to get more precisely will be having the certain colors of the songs in the begining.
