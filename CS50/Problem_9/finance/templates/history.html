@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy Stock
+{% endblock %}
+
+{% block main %}
+    <form action="/history" method="get">
+        <main class="container py-5 text-center">
+            <div class="section">
+                <h2 class="mb-4">Trade History</h2>
+                <div>
+                    <form action="/history" method="get" style="display: inline;">
+                        <input type="hidden" name="latest" value="1">
+                        <button type="submit" class="btn btn-primary mb-3">From Latest</button>
+                    </form>
+                    <form action="/history" method="get" style="display: inline;">
+                        <input type="hidden" name="latest" value="0">
+                        <button type="submit" class="btn btn-secondary mb-3">From Earliest</button>
+                    </form>
+                </div>
+                <table class="table table-striped table-hover" style="font-family: Arial; font-size:18px; border: 1px solid #ccc; border-radius: 10px;">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>STOCK</th>
+                            <th>BUY/SELL</th>
+                            <th>SHARES</th>
+                            <th>TRADE PRICE</th>
+                            <th>TRADE DATES (ET)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trade in trade_history %}
+                            <tr>
+                                <td>{{ trade["trade_stock"] }}</td>
+                                <td>{{ trade["trade_type"] }}</td>
+                                <td>{{ trade["trade_shares"] }}</td>
+                                <td>{{ trade["trade_price"]  | usd }}</td>
+                                <td>{{ trade["trade_dates"] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('history', page=page-1, latest=latest) }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for p in range(1, total_pages + 1) %}
+                            <li class="page-item {% if p == page %}active{% endif %}">
+                                <a class="page-link" href="{{ url_for('history', page=p, latest=latest) }}">{{ p }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if page < total_pages %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('history', page=page+1, latest=latest) }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </main>
+    </form>
+{% endblock %}

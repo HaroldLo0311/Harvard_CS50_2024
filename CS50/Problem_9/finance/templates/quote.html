@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            <h style="font-size:18px; font-family:Arial">Stock Seeker</h>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Stock symbol" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Look up</button>
+    </form>
+
+
+    {% if output %}
+        <br>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title" style="color: blue; font-size:24px;">Symbol: {{ symbol }}</h5>
+                <p class="card-text" style="color: blue; font-size:24px;">Price: {{ price | usd }}</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
